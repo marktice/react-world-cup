@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
-import moment from 'moment';
+
 import './App.css';
 import Match from './components/Match';
+import GroupForm from './components/GroupForm';
 
 class App extends Component {
   state = {
+    selection: "a",
     teams: null,
     matches: null,
     stadiums: null,
@@ -13,14 +15,8 @@ class App extends Component {
     }
   };
 
-  // handleChanges = (message) => {
-  //   this.setState(() => {return {message}});
-  // }
-
   componentDidMount() {
-    this.fetchGroupMatches().catch(err => {
-      console.log(err);
-    });
+    this.fetchGroupMatches().catch(err => console.log(err));
   }
 
   async fetchGroupMatches() {
@@ -29,10 +25,10 @@ class App extends Component {
     const data = await response.json();
     this.setState({
       teams: data.teams,
-      matches: data.groups.a.matches,
+      matches: data.groups[this.state.selection].matches,
       stadiums: data.stadiums,
       group: {
-        name: data.groups.a.name
+        name: data.groups[this.state.selection].name
       }
     });
   }
@@ -42,17 +38,17 @@ class App extends Component {
     if (!group.name) {
       return <div>Loading...</div>;
     }
+
     const listOfMatches = matches.map(match => {
       const home_team = teams.find(team => match.home_team === team.id);
       const away_team = teams.find(team => match.away_team === team.id);
       const matchStadium = stadiums.find(stadium => match.stadium === stadium.id);
-
       return (
         <Match
           matchStadium={matchStadium}
           homeTeam={home_team}
           awayTeam={away_team}
-          key={match.id}
+          key={match.name}
           {...match}
         />
       );
@@ -60,6 +56,7 @@ class App extends Component {
 
     return (
       <div className="App">
+        <GroupForm updateApp={this.fetchGroupMatches.bind(this)}/>
         <h1>{group.name}</h1>
         <div>{listOfMatches}</div>
       </div>

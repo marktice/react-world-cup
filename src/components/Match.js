@@ -1,13 +1,12 @@
-import React, { Component } from 'react';
+import React from 'react';
 import moment from 'moment';
 
 function Match(props) {
-  const matchStadium = props.stadium
-
   return (
-    <div key={props.key}>
+    <div>
       <p>{moment(props.date).format('MMMM Do h:mm a')}</p>
-      <p>{matchStadium.name}</p>
+      <p>{props.matchStadium.name}</p>
+      <img style={{width: '250px'}} src={props.matchStadium.image} alt="stadium" />
       <p>
         {props.homeTeam.name} {props.homeTeam.emojiString} vs {props.awayTeam.emojiString} {props.awayTeam.name}
       </p>
