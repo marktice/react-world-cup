@@ -2,6 +2,7 @@ import React from 'react';
 import moment from 'moment';
 
 function Match(props) {
+  // const weather = props.handleWeather(props.matchStadium)
   return (
     <div className='match' style={{ background: props.home_result !== null ? 'green' : 'red' }}>
       <p>{moment(props.date).format('MMMM Do h:mm a')}</p>
@@ -15,6 +16,7 @@ function Match(props) {
       )}
       <img style={{ width: '300px' }} src={props.matchStadium.image} alt="stadium" />
       <p>{props.matchStadium.name}</p>
+      {/* {weather} */}
     </div>
   );
 }
