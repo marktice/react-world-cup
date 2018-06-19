@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import App from './../App';
 
 class GroupForm extends Component {
   constructor(props) {
@@ -8,43 +7,39 @@ class GroupForm extends Component {
       group: 'a'
     };
   }
-  
+
   handleChange = (event) => {
+    const groupSelection = event.target.value;
     this.setState({
-      group: event.target.value
-    })
-    
-    // App.setState({
-    //   selection: event.target.value
-    // })
-    // App.fetchGroupMatches().catch(err => console.log(err));
-  }
+      group: groupSelection
+    });
+    this.props.handleGroupChange(groupSelection);
+  };
 
-  handleSubmit = (event) => {
-    event.preventDefault();
-    alert('A Group was submitted: ' + this.state.group);
+  // handleSubmit = (event) => {
+  //   event.preventDefault();
+  //   this.props.handleGroupChange(this.state.group)
+  // }
 
-  }
-
-  render(){
+  render() {
     return (
       <form onSubmit={this.handleSubmit}>
         <label>
           Group:
           <select value={this.state.group} onChange={this.handleChange}>
-            <option value="a">a</option>
-            <option value="b">b</option>
-            <option value="c">c</option>
-            <option value="d">d</option>
-            <option value="e">e</option>
-            <option value="f">f</option>
-            <option value="g">g</option>
-            <option value="h">h</option>
+            <option value="a">A</option>
+            <option value="b">B</option>
+            <option value="c">C</option>
+            <option value="d">D</option>
+            <option value="e">E</option>
+            <option value="f">F</option>
+            <option value="g">G</option>
+            <option value="h">H</option>
           </select>
         </label>
-        <input type="submit" value="Submit" />
+        {/* <input type="submit" value="Submit" /> */}
       </form>
-    )
+    );
   }
 }
 
